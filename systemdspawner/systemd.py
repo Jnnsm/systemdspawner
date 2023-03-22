@@ -21,24 +21,33 @@ def ensure_environment_directory(environment_file_directory):
     # ensure directory exists
     try:
         os.makedirs(environment_file_directory, mode=0o700, exist_ok=True)
-    except:
-        pass
-    # validate permissions
-    mode = os.stat(environment_file_directory).st_mode
-    if mode & 0o077:
+    except Exception as e:
         warnings.warn(
-            f"Fixing permissions on environment directory {environment_file_directory}: {oct(mode)}",
+            f"The command makedirs failed on path {environment_file_directory}. Exception: {e}",
             RuntimeWarning,
         )
-        os.chmod(environment_file_directory, 0o700)
-    else:
-        return
-    # Check again after supposedly fixing.
-    # Some filesystems can have weird issues, preventing this from having desired effect
-    mode = os.stat(environment_file_directory).st_mode
-    if mode & 0o077:
+    # validate permissions
+    try:
+        mode = os.stat(environment_file_directory).st_mode
+        if mode & 0o077:
+            warnings.warn(
+                f"Fixing permissions on environment directory {environment_file_directory}: {oct(mode)}",
+                RuntimeWarning,
+            )
+            os.chmod(environment_file_directory, 0o700)
+        else:
+            return
+        # Check again after supposedly fixing.
+        # Some filesystems can have weird issues, preventing this from having desired effect
+        mode = os.stat(environment_file_directory).st_mode
+        if mode & 0o077:
+            warnings.warn(
+                f"Bad permissions on environment directory {environment_file_directory}: {oct(mode)}",
+                RuntimeWarning,
+            )
+    except:
         warnings.warn(
-            f"Bad permissions on environment directory {environment_file_directory}: {oct(mode)}",
+            f"Command failed on path {environment_file_directory}. Exception: {e}",
             RuntimeWarning,
         )
 
