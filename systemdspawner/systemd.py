@@ -19,7 +19,10 @@ RUN_ROOT = "/run"
 def ensure_environment_directory(environment_file_directory):
     """Ensure directory for environment files exists and is private"""
     # ensure directory exists
-    os.makedirs(environment_file_directory, mode=0o700, exist_ok=True)
+    try:
+        os.makedirs(environment_file_directory, mode=0o700, exist_ok=True)
+    except:
+        pass
     # validate permissions
     mode = os.stat(environment_file_directory).st_mode
     if mode & 0o077:
