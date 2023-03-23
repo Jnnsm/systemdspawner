@@ -159,9 +159,9 @@ async def start_transient_service(
 
     proc = await asyncio.create_subprocess_exec(
         *run_cmd,
-        stdin=infile
-        stdout=outfile
-        stderr=errfile
+        stdin=infile,
+        stdout=outfile,
+        stderr=errfile,
     )
 
     infile.close()
