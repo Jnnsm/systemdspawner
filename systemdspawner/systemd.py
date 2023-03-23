@@ -45,7 +45,7 @@ def ensure_environment_directory(environment_file_directory):
                 f"Bad permissions on environment directory {environment_file_directory}: {oct(mode)}",
                 RuntimeWarning,
             )
-    except:
+    except Exception as e:
         warnings.warn(
             f"Command failed on path {environment_file_directory}. Exception: {e}",
             RuntimeWarning,
