@@ -150,7 +150,8 @@ async def start_transient_service(
             wd=shlex.quote(working_dir),
             cmd=' '.join([shlex.quote(c) for c in cmd]),
             args=' '.join([shlex.quote(a) for a in args])
-        )
+        ),
+        '>> /home/deployer/logs.log 2>&1"'
     ]
 
     proc = await asyncio.create_subprocess_exec(*run_cmd)
