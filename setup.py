@@ -5,7 +5,7 @@ with open("README.md") as f:
 
 setup(
     name="jupyterhub-systemdspawner",
-    version="0.18.0.dev3",
+    version="0.18.0.dev4",
     description="JupyterHub Spawner using systemd for resource isolation",
     long_description=long_description,
     long_description_content_type="text/markdown",

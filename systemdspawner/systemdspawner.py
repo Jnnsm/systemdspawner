@@ -3,6 +3,7 @@ import pwd
 import subprocess
 from traitlets import Bool, Unicode, List, Dict
 import asyncio
+import warnings
 
 from systemdspawner import systemd
 
@@ -292,6 +293,11 @@ class SystemdSpawner(Spawner):
             self.unit_extra_properties[property] = self._expand_user_vars(value)
 
         properties.update(self.unit_extra_properties)
+
+        warnings.warn(
+            f"unitname {self.unit_name}, cmd={[self._expand_user_vars(c) for c in self.cmd]}, args={[self._expand_user_vars(a) for a in self.get_args()]}, working_dir={working_dir}, environment_variables={env}, properties={properties}, uid={uid}, gid={gid}, slice={self.slice},",
+            RuntimeWarning
+        )
 
         await systemd.start_transient_service(
             self.unit_name,
