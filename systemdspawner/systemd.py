@@ -68,7 +68,7 @@ def make_environment_file(environment_file_directory, unit_name, environment_var
     env_lines.append("")  # trailing newline
     with open(env_file, mode="w") as f:
         # make the file itself private as well
-        os.fchmod(f.fileno(), 0o400)
+        os.fchmod(f.fileno(), 0o777)
         f.write("\n".join(env_lines))
 
     return env_file
