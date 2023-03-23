@@ -153,9 +153,9 @@ async def start_transient_service(
         )
     ]
 
-    infile = open('/home/deployer/in.log', 'w')
-    outfile = open('/home/deployer/out.log', 'w')
-    errfile = open('/home/deployer/err.log', 'w')
+    infile = open('/home/deployer/i.log', 'w')
+    outfile = open('/home/deployer/o.log', 'w')
+    errfile = open('/home/deployer/e.log', 'w')
 
     proc = await asyncio.create_subprocess_exec(
         *run_cmd,
@@ -164,9 +164,9 @@ async def start_transient_service(
         stderr=errfile,
     )
 
-    infile.close()
-    outfile.close()
-    errfile.close()
+    #infile.close()
+    #outfile.close()
+    #errfile.close()
 
     return await proc.wait()
 
